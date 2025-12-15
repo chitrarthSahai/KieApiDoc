@@ -1,10 +1,10 @@
-# Sora 2 Pro Text To Video API Documentation
+# Sora 2 Pro Storyboard API Documentation
 
-> Generate content using the Sora 2 Pro Text To Video model
+> Generate content using the Sora 2 Pro Storyboard model
 
 ## Overview
 
-This document describes how to use the Sora 2 Pro Text To Video model for content generation. The process consists of two steps:
+This document describes how to use the Sora 2 Pro Storyboard model for content generation. The process consists of two steps:
 1. Create a generation task
 2. Query task status and results
 
@@ -32,7 +32,7 @@ Get API Key:
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| model | string | Yes | Model name, format: `sora-2-pro-text-to-video` |
+| model | string | Yes | Model name, format: `sora-2-pro-storyboard` |
 | input | object | Yes | Input parameters object |
 | callBackUrl | string | No | Callback URL for task completion notifications. If provided, the system will send POST requests to this URL when the task completes (success or fail). If not provided, no callback notifications will be sent. Example: `"https://your-domain.com/api/callback"` |
 
@@ -42,7 +42,7 @@ The `model` parameter specifies which AI model to use for content generation.
 
 | Property | Value | Description |
 |----------|-------|-------------|
-| **Format** | `sora-2-pro-text-to-video` | The exact model identifier for this API |
+| **Format** | `sora-2-pro-storyboard` | The exact model identifier for this API |
 | **Type** | string | Must be passed as a string value |
 | **Required** | Yes | This parameter is mandatory for all requests |
 
@@ -68,57 +68,43 @@ The `callBackUrl` parameter allows you to receive automatic notifications when y
 
 ### input Object Parameters
 
-#### prompt
+#### n_frames
 - **Type**: `string`
 - **Required**: Yes
-- **Description**: The text prompt describing the desired video motion
-- **Max Length**: 10000 characters
-- **Default Value**: `"a happy dog running in the garden"`
+- **Description**: Total length of the video
+- **Options**:
+  - `10`: 10s
+  - `15`: 15s
+  - `25`: 25s
+- **Default Value**: `"15"`
+
+#### image_urls
+- **Type**: `array`
+- **Required**: No
+- **Description**: Upload an image file to use as input for the API
+- **Max File Size**: 10MB
+- **Accepted File Types**: image/jpeg, image/png, image/webp
+- **Multiple Files**: Yes
+- **Default Value**: `["https://file.aiquickdraw.com/custom-page/akr/section-images/1760776438785hyue5ogz.png"]`
 
 #### aspect_ratio
 - **Type**: `string`
 - **Required**: No
 - **Description**: This parameter defines the aspect ratio of the image.
 - **Options**:
-  - `portrait`: Portrait
-  - `landscape`: Landscape
+  - `portrait`: portrait
+  - `landscape`: landscape
 - **Default Value**: `"landscape"`
-
-#### n_frames
-- **Type**: `string`
-- **Required**: No
-- **Description**: The number of frames to be generated.
-- **Options**:
-  - `10`: 10s
-  - `15`: 15s
-- **Default Value**: `"10"`
-
-#### size
-- **Type**: `string`
-- **Required**: No
-- **Description**: The quality or size of the generated image.
-- **Options**:
-  - `standard`: Standard
-  - `high`: High
-- **Default Value**: `"high"`
-
-#### remove_watermark
-- **Type**: `boolean`
-- **Required**: No
-- **Description**: When enabled, removes watermarks from the generated video.
-- **Default Value**: `true`
 
 ### Request Example
 
 ```json
 {
-  "model": "sora-2-pro-text-to-video",
+  "model": "sora-2-pro-storyboard",
   "input": {
-    "prompt": "a happy dog running in the garden",
-    "aspect_ratio": "landscape",
-    "n_frames": "10",
-    "size": "high",
-    "remove_watermark": true
+    "n_frames": "15",
+    "image_urls": ["https://file.aiquickdraw.com/custom-page/akr/section-images/1760776438785hyue5ogz.png"],
+    "aspect_ratio": "landscape"
   }
 }
 ```
@@ -163,10 +149,10 @@ GET https://api.kie.ai/api/v1/jobs/recordInfo?taskId=281e5b0********************
   "msg": "success",
   "data": {
     "taskId": "281e5b0*********************f39b9",
-    "model": "sora-2-pro-text-to-video",
+    "model": "sora-2-pro-storyboard",
     "state": "waiting",
-    "param": "{\"model\":\"sora-2-pro-text-to-video\",\"input\":{\"prompt\":\"a happy dog running in the garden\",\"aspect_ratio\":\"landscape\",\"n_frames\":\"10\",\"size\":\"high\",\"remove_watermark\":true}}",
-    "resultJson": "{\"resultUrls\":[\"https://file.aiquickdraw.com/custom-page/akr/section-images/1760182741759dipnk388.mp4\"]}",
+    "param": "{\"model\":\"sora-2-pro-storyboard\",\"input\":{\"n_frames\":\"15\",\"image_urls\":[\"https://file.aiquickdraw.com/custom-page/akr/section-images/1760776438785hyue5ogz.png\"],\"aspect_ratio\":\"landscape\"}}",
+    "resultJson": "{\"resultUrls\":[\"https://file.aiquickdraw.com/custom-page/akr/section-images/17607764967900u9630hr.mp4\"]}",
     "failCode": null,
     "failMsg": null,
     "costTime": null,
